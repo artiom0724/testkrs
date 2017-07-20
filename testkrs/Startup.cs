@@ -80,7 +80,7 @@ namespace testkrs
                 AppId = "784489228379055",
                 AppSecret = "a7683f83ccf132add0ea51884fdf9efb",
                 AuthenticationScheme = "Facebook"
-            });
+            }); 
 
             app.UseTwitterAuthentication(new TwitterOptions
             {
