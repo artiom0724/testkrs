@@ -43,7 +43,10 @@ namespace testkrs
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>(config =>
+            {
+                config.SignIn.RequireConfirmedEmail = true;
+            })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -52,6 +55,8 @@ namespace testkrs
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+
+            services.Configure<AuthMessageSenderOptions>(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -87,14 +92,22 @@ namespace testkrs
                ConsumerKey = "hN2orQqMoos4FX9qQL32rWRB6",
                ConsumerSecret = "Ct1JOqv6WzTam7O2EgIv4WYkonQjecHUwtNqWIJt4ftLwP1Zuf"
             });
-
+           
             app.UseGoogleAuthentication(new GoogleOptions
             {
                 ClientId = "953159431162-4kcj8oeh4p9n8abs7rqu672bojaplp1n.apps.googleusercontent.com",
                 ClientSecret = "TmGLlJYDwueUvJfLmNKIyjgV"
+                
             });
 
-             
+            app.UseVkontakteAuthentication(new Brik.Security.VkontakteMiddleware.VkontakteOptions
+            {
+                ClientId = "6104997",
+                ClientSecret = "ZsVxEY8O0ez3LHfi5OjO",
+                AuthenticationScheme = "Vkontakte"
+
+            });
+
             // Add external authentication middleware below. To configure them please see https://go.microsoft.com/fwlink/?LinkID=532715
 
             app.UseMvc(routes =>
