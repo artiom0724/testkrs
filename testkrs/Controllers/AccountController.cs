@@ -184,11 +184,16 @@ namespace testkrs.Controllers
                 return RedirectToAction(nameof(Login));
             }
 
+            if(info.LoginProvider != null)
+            {
+                
+               // ConfirmEmail = true;
+            }
             // Sign in the user with this external login provider if the user already has a login.
             var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false);
             if (result.Succeeded)
             {
-                _logger.LogInformation(5, "User logged in with {Name} provider.", info.LoginProvider);
+                _logger.LogInformation(5, "User logged in with {Name} provider.", info.LoginProvider);///Vo tut!!!!!!!!!!!!!
                 return RedirectToLocal(returnUrl);
             }
             if (result.RequiresTwoFactor)
@@ -216,6 +221,7 @@ namespace testkrs.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl = null)
         {
+            
             if (ModelState.IsValid)
             {
                 // Get the information about the user from the external login provider
@@ -224,7 +230,12 @@ namespace testkrs.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var confirm = false;
+                if(info.LoginProvider != null)
+                {
+                    confirm = true;
+                }
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, EmailConfirmed = confirm };
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
