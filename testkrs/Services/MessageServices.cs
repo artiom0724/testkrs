@@ -27,10 +27,10 @@ namespace testkrs.Services
 
         public Task Execute(string apiKey, string subject, string message, string email)
         {
-            var client = new SendGridClient(apiKey);
+            var client = new SendGridClient("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");
             var msg = new SendGridMessage()
             {
-                From = new EmailAddress("art0724@mail.ru", "Artiom Artiom"),
+                From = new EmailAddress("a_0_7@mail.ru"),//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
                 Subject = subject,
                 PlainTextContent = message,
                 HtmlContent = message

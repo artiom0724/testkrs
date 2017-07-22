@@ -12,6 +12,9 @@ using Microsoft.Extensions.Logging;
 using testkrs.Data;
 using testkrs.Models;
 using testkrs.Services;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.Options;
 
 namespace testkrs
 {
@@ -50,7 +53,22 @@ namespace testkrs
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddMvc();
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+            services.AddMvc()
+                .AddDataAnnotationsLocalization()
+                .AddViewLocalization();
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new[]
+                {
+                    new CultureInfo("en"),
+                    new CultureInfo("ru")
+                };
+
+                options.DefaultRequestCulture = new RequestCulture("ru");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+            });
 
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
@@ -75,29 +93,50 @@ namespace testkrs
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-
+                
             app.UseStaticFiles();
 
             app.UseIdentity();
 
+            app.UseDeveloperExceptionPage();
+
+            SocialAutentifications(app);
+            // Add external authentication middleware below. To configure them please see https://go.microsoft.com/fwlink/?LinkID=532715
+            ConfigureMyLocalization(app);          
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
+        }
+
+        public void ConfigureMyLocalization(IApplicationBuilder app)
+        {
+            var locOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+            app.UseRequestLocalization(locOptions.Value);          
+        }
+
+        public void SocialAutentifications(IApplicationBuilder app)
+        {
             app.UseFacebookAuthentication(new FacebookOptions
             {
                 AppId = "784489228379055",
                 AppSecret = "a7683f83ccf132add0ea51884fdf9efb",
                 AuthenticationScheme = "Facebook"
-            }); 
+            });
 
             app.UseTwitterAuthentication(new TwitterOptions
             {
-               ConsumerKey = "hN2orQqMoos4FX9qQL32rWRB6",
-               ConsumerSecret = "Ct1JOqv6WzTam7O2EgIv4WYkonQjecHUwtNqWIJt4ftLwP1Zuf"
+                ConsumerKey = "hN2orQqMoos4FX9qQL32rWRB6",
+                ConsumerSecret = "Ct1JOqv6WzTam7O2EgIv4WYkonQjecHUwtNqWIJt4ftLwP1Zuf"
             });
-           
+
             app.UseGoogleAuthentication(new GoogleOptions
             {
                 ClientId = "953159431162-4kcj8oeh4p9n8abs7rqu672bojaplp1n.apps.googleusercontent.com",
                 ClientSecret = "TmGLlJYDwueUvJfLmNKIyjgV"
-                
             });
 
             app.UseVkontakteAuthentication(new Brik.Security.VkontakteMiddleware.VkontakteOptions
@@ -105,16 +144,6 @@ namespace testkrs
                 ClientId = "6104997",
                 ClientSecret = "ZsVxEY8O0ez3LHfi5OjO",
                 AuthenticationScheme = "Vkontakte"
-
-            });
-
-            // Add external authentication middleware below. To configure them please see https://go.microsoft.com/fwlink/?LinkID=532715
-
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
