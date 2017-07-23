@@ -1,0 +1,19 @@
+{
+  "name": "angular",
+  "version": "1.6.6-build.5436+sha.87a586e",
+  "license": "MIT",
+  "main": "./angular.js",
+  "ignore": [],
+  "dependencies": {},
+  "homepage": "https://github.com/angular/bower-angular",
+  "_release": "1.6.6-build.5436+sha.87a586e",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.6.6-build.5436+sha.87a586e",
+    "commit": "3107fc8da373d71688a83a4ddb7b92d57ff49c1d"
+  },
+  "_source": "https://github.com/angular/bower-angular.git",
+  "_target": "v1.6.6-build.5436+sha.87a586e",
+  "_originalSource": "angular",
+  "_direct": true
+}

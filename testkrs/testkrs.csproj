@@ -8,11 +8,25 @@
   <PropertyGroup>
     <UserSecretsId>aspnet-testkrs-4944c983-404b-49c0-979e-f365ed433137</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="wwwroot\app\about.component.ts" />
+    <Content Include="wwwroot\app\app.routing.ts" />
+    <Content Include="wwwroot\app\contact.component.ts" />
+    <Content Include="wwwroot\app\index.component.ts" />
+    <Content Include="wwwroot\app\main.js" />
+    <Content Include="wwwroot\app\main.js.map" />
+    <Content Include="wwwroot\app\main.ts" />
+    <Content Include="wwwroot\main.js" />
+    <Content Include="wwwroot\main.js.map" />
+    <Content Include="wwwroot\main.ts" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AspNetCore.Security.OAuth.Vkontakte" Version="1.0.1" />
     <PackageReference Include="Brik.Security.VkontakteMiddleware" Version="1.0.2" />
+    <PackageReference Include="BundlerMinifier.Core" Version="2.4.337" />
     <PackageReference Include="Lib.AspNetCore.Security" Version="2.2.0" />
-    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNet.Identity.Core" Version="2.2.1" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="1.1.2" />
@@ -23,6 +37,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="1.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="1.1.2" />
@@ -51,10 +66,22 @@
     <EmbeddedResource Update="Resources\Controllers.HomeController.ru.resx">
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Home\Index.en.resx">
+    <EmbeddedResource Update="Resources\Views\Home\IndexComponent.en.resx">
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Home\Index.ru.resx">
+    <EmbeddedResource Update="Resources\Views\Home\IndexComponent.ru.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Partial\AppComponent.ru.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Partial\AppComponent.en.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Partial\IndexComponent.en.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Views\Partial\IndexComponent.ru.resx">
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
   </ItemGroup>
