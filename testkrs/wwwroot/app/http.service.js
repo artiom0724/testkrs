@@ -10,25 +10,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var http_service_1 = require("./http.service");
-var IndexComponent = (function () {
-    function IndexComponent(httpService) {
-        this.httpService = httpService;
+var http_1 = require("@angular/http");
+var HttpService = (function () {
+    function HttpService(http) {
+        this.http = http;
     }
-    IndexComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.httpService.getData().subscribe(function (data) { return _this.mydata = data.json(); });
-        this.testtext = "qweQQQ";
+    HttpService.prototype.getData = function () {
+        return this.http.get('mydata.json');
     };
-    return IndexComponent;
+    return HttpService;
 }());
-IndexComponent = __decorate([
-    core_1.Component({
-        selector: 'my-index',
-        templateUrl: '/partial/indexComponent',
-        providers: [http_service_1.HttpService]
-    }),
-    __metadata("design:paramtypes", [http_service_1.HttpService])
-], IndexComponent);
-exports.IndexComponent = IndexComponent;
-//# sourceMappingURL=index.component.js.map
+HttpService = __decorate([
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [http_1.Http])
+], HttpService);
+exports.HttpService = HttpService;
+//# sourceMappingURL=http.service.js.map

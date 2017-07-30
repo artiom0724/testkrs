@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
+using Microsoft.AspNetCore.SpaServices.Webpack;
 
 namespace testkrs
 {
@@ -120,7 +121,12 @@ namespace testkrs
 
                 routes.MapSpaFallbackRoute("spa-fallback", new { controller = "home", action = "index" });
             });
-            context.Database.EnsureCreated();
+
+            //app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
+            //{
+            //    HotModuleReplacement = true
+            //});
+
         }
 
         public void ConfigureMyLocalization(IApplicationBuilder app)

@@ -7,11 +7,9 @@
 
   <PropertyGroup>
     <UserSecretsId>aspnet-testkrs-4944c983-404b-49c0-979e-f365ed433137</UserSecretsId>
+    <AssemblyName>testkrs</AssemblyName>
+    <RootNamespace>testkrs</RootNamespace>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="Models\InstructionsContext.cs" />
-  </ItemGroup>
 
   <ItemGroup>
     <Content Include="wwwroot\app\about.component.ts" />
@@ -19,11 +17,10 @@
     <Content Include="wwwroot\app\contact.component.ts" />
     <Content Include="wwwroot\app\index.component.ts" />
     <Content Include="wwwroot\app\main.js" />
-    <Content Include="wwwroot\app\main.js.map" />
     <Content Include="wwwroot\app\main.ts" />
-    <Content Include="wwwroot\main.js" />
-    <Content Include="wwwroot\main.js.map" />
-    <Content Include="wwwroot\main.ts" />
+    <Content Include="wwwroot\mydata.json">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AspNetCore.Security.OAuth.Vkontakte" Version="1.0.1" />
