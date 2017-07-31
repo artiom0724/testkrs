@@ -13,6 +13,8 @@ namespace testkrs.Data
             : base(options)
         { }
 
+        public DbSet<Categories> Categoriess { get; set; }
+        public DbSet<Comment> Comments { get; set; }
         public DbSet<Block> Blocks { get; set; }
         public DbSet<Medal> Medals { get; set; }
         public DbSet<Instruction> Instructions { get; set; }
@@ -20,6 +22,8 @@ namespace testkrs.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Categories>().ToTable("Categories");
+            modelBuilder.Entity<Comment>().ToTable("Comment");
             modelBuilder.Entity<Block>().ToTable("Block");
             modelBuilder.Entity<Medal>().ToTable("Medal");
             modelBuilder.Entity<Instruction>().ToTable("Instruction");

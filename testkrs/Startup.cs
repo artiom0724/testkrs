@@ -44,7 +44,7 @@ namespace testkrs
             // Add framework services.
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")))
-                .AddDbContext<MedalsContext>(options => 
+                .AddDbContext<FinalDbContext>(options => 
                 options.UseSqlServer(Configuration.GetConnectionString("NoDefCon")));
            
             services.AddIdentity<ApplicationUser, IdentityRole>(config =>
@@ -79,7 +79,7 @@ namespace testkrs
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, MedalsContext context)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, FinalDbContext context)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -121,12 +121,7 @@ namespace testkrs
 
                 routes.MapSpaFallbackRoute("spa-fallback", new { controller = "home", action = "index" });
             });
-
-            //app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
-            //{
-            //    HotModuleReplacement = true
-            //});
-
+            context.Database.EnsureCreated();
         }
 
         public void ConfigureMyLocalization(IApplicationBuilder app)

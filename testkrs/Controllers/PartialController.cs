@@ -3,14 +3,20 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using System;
+using System.Linq;
+using testkrs.Data;
+using testkrs.Models;
 
 namespace testkrs.Controllers
 {
     public class PartialController : Controller
     {
         private readonly IStringLocalizer<PartialController> _localizer;
-        public PartialController(IStringLocalizer<PartialController> localizer)
+        private readonly Data.FinalDbContext _context;
+
+        public PartialController(IStringLocalizer<PartialController> localizer, Data.FinalDbContext context)
         {
+            _context = context;
             _localizer = localizer;
         }
         [HttpPost]
@@ -31,5 +37,10 @@ namespace testkrs.Controllers
         public IActionResult ContactComponent() => PartialView();
 
         public IActionResult IndexComponent() => PartialView();
+        
+        public JsonResult GetData()
+        {           
+            return Json(_context.Instructions.ToList());
+        }
     }
 }

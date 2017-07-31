@@ -1,4 +1,9 @@
 ﻿export class Mydata {
-    name: string;
-    age: number;
+    instructionId: number;
+    InstructionId: number ;
+    instructionTitle: string;
+    instructionsName: string;
+    hashtegs: string ;
+    instructionRang: number ;
+    instructionCategory: string;   
 }

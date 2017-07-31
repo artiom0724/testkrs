@@ -16,7 +16,7 @@ var HttpService = (function () {
         this.http = http;
     }
     HttpService.prototype.getData = function () {
-        return this.http.get('mydata.json');
+        return this.http.get('http://localhost:62429/Partial/GetData/'); //http://localhost:62429/
     };
     return HttpService;
 }());

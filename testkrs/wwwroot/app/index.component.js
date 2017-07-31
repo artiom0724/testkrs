@@ -14,10 +14,11 @@ var http_service_1 = require("./http.service");
 var IndexComponent = (function () {
     function IndexComponent(httpService) {
         this.httpService = httpService;
+        this.mydatas = [];
     }
     IndexComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.httpService.getData().subscribe(function (data) { return _this.mydata = data.json(); });
+        this.httpService.getData().subscribe(function (data) { return _this.mydatas = data.json(); });
         this.testtext = "qweQQQ";
     };
     return IndexComponent;

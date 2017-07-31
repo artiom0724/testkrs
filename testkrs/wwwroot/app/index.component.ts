@@ -10,11 +10,11 @@ import { Mydata } from './mydata'
 })
 
 export class IndexComponent implements OnInit { 
-    mydata: Mydata;
+    mydatas: Mydata[] = [];
     testtext: string;
     constructor(public httpService: HttpService) { }
     ngOnInit() {
-        this.httpService.getData().subscribe((data: Response) => this.mydata = data.json());
+        this.httpService.getData().subscribe((data: Response) => this.mydatas = data.json());
         this.testtext = "qweQQQ";
     }
 }

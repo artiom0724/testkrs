@@ -1,48 +1,51 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace testkrs.Models
-{
-    public class InstructionsContext : DbContext
+{   
+    public class Profile
     {
-        public InstructionsContext(DbContextOptions<InstructionsContext> options)
-            : base(options)
-        { }
-
-        public DbSet<Block> Blocks { get; set; }
-        public DbSet<Instruction> Instructions { get; set; }
-        public DbSet<InstructionStep> Steps { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int ProfileId { get; set; }
+        public string roots { get; set; }
+        public int numOfComments { get; set; }
+        public int numOfInstructions { get; set; }
     }
 
     public class Categories
     {
-        public int categoriesId;
-        public string categoriesName;
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        private int CategoriesId{ get; set; }    
+        public int categoriesId { get; set; }
+        public string categoriesName { get; set; }
     }
     public class Instruction
     {
-        private int instructionId { get; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        private int instructionId { get; set; }
         public int InstructionId { get; set; }
         public string instructionTitle { get; set; }
         public string instructionsName { get; set; }
         public string hashtegs { get; set; }
-        public int BlogId { get; set; }
         public double instructionRang { get; set; }
         public string instructionCategory { get; set; }
-        public List<InstructionStep> Steps { get; set; }
+        //public List<InstructionStep> Steps { get; set; }
     }
 
     public class InstructionStep
     {
-        private int stepId { get; }
-        public int StepId { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        private int InstructionSteppId { get; set; }
+        public int instructionStepId { get; set; }
         public string instructionPath { get; set; }
         public int numStep { get; set; }
-        public List<Block> Blocks { get; set; }
+        //public List<Block> Blocks { get; set; }
     }
 
     public class Block
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         private int blockId { get; }
         public int BlockId { get; set; }
         public string stepPath { get; set; }
@@ -53,6 +56,7 @@ namespace testkrs.Models
 
     public class Comment
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         private int commentId { get; }
         public int CommentId { get; set; }
         public string commentType { get; set; }//instr or step

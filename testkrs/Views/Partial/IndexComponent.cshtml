@@ -17,9 +17,9 @@
             <img src="~/images/banner1.svg" alt="ASP.NET" class="img-responsive" />
             <div class="carousel-caption" role="option">
                 <p>
-                  
+                    {{mydatas[0]?.instructionTitle}}
                     <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525028&clcid=0x409">
-                        Learn More
+                       {{mydatas[0]?.instructionsName}}
                     </a>
                 </p>
             </div>
@@ -83,7 +83,7 @@
 </div>
 <div class="row">
     <div class="col-md-3">
-        <h2>qwer</h2>
+        <h2>{{mydatas[0]?.instructionsName}}</h2>
         <ul>
             <li>Sample pages using ASP.NET Core MVC</li>
             <li><a href="https://go.microsoft.com/fwlink/?LinkId=518004">Bower</a> for managing client-side libraries</li>
@@ -97,15 +97,16 @@
         </ul>
     </div>
     <div class="col-md-3">
-        <h2>{{mydata?.name}}</h2>
+        <h2>{{mydatas?.instructionsName}}</h2>
         <ul>
             <li><a href="https://go.microsoft.com/fwlink/?LinkID=699323">Read more on the documentation site</a></li>
         </ul>
     </div>
     <div class="col-md-3">
-        <h2>{{mydata?.age}}</h2>
+        <h2>{{mydatas?.instructionsTitle}}</h2>
         <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=398609">Publish to Microsoft Azure Web Apps</a></li>
+            <li *ngFor ="let mydata of mydatas">
+            <p>{{mydatas?.instructionsTitle}}</p></li>
         </ul>
     </div>
 </div>
