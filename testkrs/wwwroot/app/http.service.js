@@ -18,6 +18,28 @@ var HttpService = (function () {
     HttpService.prototype.getData = function () {
         return this.http.get('http://localhost:62429/Partial/GetData/'); //http://localhost:62429/
     };
+    HttpService.prototype.getCategories = function () {
+        return this.http.get('http://localhost:62429/Partial/GetCategories/');
+    };
+    HttpService.prototype.getHashtegs = function () {
+        return this.http.get('http://localhost:62429/Partial/GetHashtegs/');
+    };
+    //***************************************************************************************************
+    HttpService.prototype.getInstruction = function (reqestId) {
+        return this.http.get('http://localhost:62429/Partial/GetAboutInstruction?_InstructionId=' + reqestId);
+    };
+    HttpService.prototype.getSteps = function (reqestId) {
+        return this.http.get('http://localhost:62429/Partial/GetInstructionSteps?_InstructionId=' + reqestId);
+    };
+    HttpService.prototype.getComments = function (reqestId) {
+        return this.http.get('http://localhost:62429/Partial/GetInstructionComments?_instructionId=' + reqestId);
+    };
+    HttpService.prototype.getReqest = function () {
+        return this.http.get('http://localhost:62429/Partial/GetReqest/');
+    };
+    HttpService.prototype.setReqest = function (instr) {
+        this.http.get('http://localhost:62429/Partial/SetReqest?_instructionName=' + instr);
+    };
     return HttpService;
 }());
 HttpService = __decorate([

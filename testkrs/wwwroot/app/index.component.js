@@ -15,11 +15,14 @@ var IndexComponent = (function () {
     function IndexComponent(httpService) {
         this.httpService = httpService;
         this.mydatas = [];
+        this.mycategories = [];
+        this.myhashtegs = [];
     }
     IndexComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.httpService.getData().subscribe(function (data) { return _this.mydatas = data.json(); });
-        this.testtext = "qweQQQ";
+        this.httpService.getCategories().subscribe(function (data) { return _this.mycategories = data.json(); });
+        this.httpService.getHashtegs().subscribe(function (data) { return _this.myhashtegs = data.json(); });
     };
     return IndexComponent;
 }());

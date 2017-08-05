@@ -11,6 +11,7 @@ var platform_browser_1 = require("@angular/platform-browser");
 var app_routing_1 = require("./app.routing");
 var common_1 = require("@angular/common");
 var app_component_1 = require("./app.component");
+//import { FormsModule } from '@angular/forms';
 var http_1 = require("@angular/http");
 // enableProdMode();
 var AppModule = (function () {

@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
-<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
+<nav class="navbar navbar-inverse navbar-fixed-top" style="width:inherit">
+    <div class="container" style="width:inherit">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
@@ -12,26 +12,21 @@
             <a routerLink="/home" routerLinkActive="active" class="navbar-brand">testkrs</a>
         </div>
         <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li><a class="nav-link" (click)="setTitle('Home - testkrs')" routerLink="/home" routerLinkActive="active">@Localizer["Home"]</a></li>
-                <li><a class="nav-link" (click)="setTitle('About - testkrs')" routerLink="/about">About</a> </li>
-                <li><a class="nav-link" (click)="setTitle('Contact - testkrs')" routerLink="/contact">Contact</a></li>
+            <ul class="nav navbar-nav navbar-left" style=" vertical-align:central">
+                <li class="input-group" style="max-width:inherit;">
+                    <input type="text" class="form-control" placeholder="Search for..." style="width:inherit; margin-top:10px">                  
+                    <button class="btn btn-default glyphicon glyphicon-search" type="button" style="margin-top:9px"></button>
+                </li>
             </ul>
             @await Html.PartialAsync("_LoginPartial")
         </div>
-    </div>
+    </div>    
 </nav>
-<div class="container body-content">
-
+<div class="container body-content" style="width:inherit;padding-right:0px;padding-left:0px;">
     <router-outlet></router-outlet>
-
-    @{
-        string razorServerSideData = "ASP.Net Core";
-    }
     <hr />
     <footer>
-        <p>&copy; 2017 - testkrs = (@razorServerSideData + {{angularClientSideData}})<sup>2</sup></p>
-        <div>
+        <div style="padding-right:0px;padding-left:80%;">
             @await Html.PartialAsync("~/Views/Shared/_SelectLanguagePartial.cshtml")
         </div>
     </footer>

@@ -13,6 +13,7 @@ namespace testkrs.Data
             : base(options)
         { }
 
+        public DbSet<Hashteg> Hashtegs { get; set; }
         public DbSet<Categories> Categoriess { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Block> Blocks { get; set; }
@@ -22,6 +23,7 @@ namespace testkrs.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Hashteg>().ToTable("Hashteg");
             modelBuilder.Entity<Categories>().ToTable("Categories");
             modelBuilder.Entity<Comment>().ToTable("Comment");
             modelBuilder.Entity<Block>().ToTable("Block");

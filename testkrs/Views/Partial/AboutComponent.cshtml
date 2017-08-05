@@ -1,9 +1,42 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
 @{
-    ViewData["Title"] = "About";
+    ViewData["Title"] = "Instruction";
 }
-<h2>@ViewData["Title"].</h2>
-<h3>@ViewData["Message"]</h3>
-
-<p>Use this area to additional information.</p>
+@*<div *ngIf="testtext">*@
+    <div class="jumbotron">
+        <div>
+            <h1>{{mydata?.instructionsName}}</h1>
+            <div class="btn btn-link" href="#" alt=@Localizer["SearchByCategory"]>
+                <h2>@Localizer["Category"] {{mydata?.instructionCategory}}</h2>
+            </div>
+            <a>{{mydata?.hashtegs}}</a>
+        </div>
+        <div>
+            <h3>{{mydata?.instructionTitle}}</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="btn btn-default col-md-4 " *ngFor="let mystep of mysteps" href="#" style="height:230px; text-align:center;vertical-align:middle">
+            <a style="color:black;font-size:50px; text-align:center;vertical-align:middle">@Localizer["Step"] {{mystep.numStep}}</a>
+        </div>
+        @*<div class="btn btn-link col-md-4" href="#">
+            <img src="~/images/qqq.png" />
+        </div>*@
+    </div>
+    <div>
+        <h2>@Localizer["Comments"]:</h2>
+        <ul class="media-list">
+            <li class="media" style="background:border-box; background-color:aquamarine" *ngFor="let mycomment of mycomments">
+                <div class="media-left">
+                    <a href="#">
+                        @* <img class="media-object" src=" "alt=""/>*@
+                    </a>
+                </div>
+                <div class="media-body">
+                    {{mycomment.commentText}}
+                </div>
+            </li>
+        </ul>
+    </div>
+@*</div>*@

@@ -7,7 +7,7 @@ var contact_component_1 = require("./contact.component");
 var appRoutes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'home', component: index_component_1.IndexComponent, data: { title: 'Home' } },
-    { path: 'about', component: about_component_1.AboutComponent, data: { title: 'About' } },
+    { path: 'about/:InstructionId', component: about_component_1.AboutComponent, data: { title: 'About' } },
     { path: 'contact', component: contact_component_1.ContactComponent, data: { title: 'Contact' } }
 ];
 exports.routing = router_1.RouterModule.forRoot(appRoutes);

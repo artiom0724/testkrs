@@ -51,7 +51,7 @@ namespace testkrs.Controllers
             await HttpContext.Authentication.SignOutAsync(_externalCookieScheme);
 
             ViewData["ReturnUrl"] = returnUrl;
-            return View();
+            return PartialView();
         }
 
         //
@@ -109,7 +109,7 @@ namespace testkrs.Controllers
         public IActionResult Register(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
-            return View();
+            return PartialView();
         }
 
         //

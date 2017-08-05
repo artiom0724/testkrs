@@ -43,8 +43,8 @@ namespace testkrs
         {
             // Add framework services.
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")))
-                .AddDbContext<FinalDbContext>(options => 
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<FinalDbContext>(options => 
                 options.UseSqlServer(Configuration.GetConnectionString("NoDefCon")));
            
             services.AddIdentity<ApplicationUser, IdentityRole>(config =>

@@ -3,7 +3,6 @@
 @using Microsoft.AspNetCore.Http.Authentication
 @model LoginViewModel
 @inject SignInManager<ApplicationUser> SignInManager
-
 @{
     ViewData["Title"] = "Log in";
 }
@@ -12,7 +11,7 @@
 </div>
 <div class="modal-body">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-8" style="width:inherit">
             <section>
                 <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
                     <h4>Use a local account to log in.</h4>
@@ -20,15 +19,15 @@
                     <div asp-validation-summary="All" class="text-danger"></div>
                     <div class="form-group">
                         <label asp-for="Email" class="col-md-2 control-label"></label>
-                        <div class="col-md-10">
-                            <input asp-for="Email" class="form-control" />
+                        <div class="col-md-10" style="padding-left: 30px;">
+                            <input asp-for="Email" class="form-control" placeholder="Email" />
                             <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label asp-for="Password" class="col-md-2 control-label"></label>
-                        <div class="col-md-10">
-                            <input asp-for="Password" class="form-control" />
+                        <div class="col-md-10" style="padding-left: 30px;">
+                            <input asp-for="Password" class="form-control" placeholder="Password" />
                             <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
                     </div>
@@ -54,13 +53,13 @@
                         <a asp-action="ForgotPassword">Forgot your password?</a>
                     </p>
                 </form>
-            </section>
-        </div>
-        <div class="col-md-4">
-            <section>
-                <h4>Use another service to log in.</h4>
                 <hr />
-                @{
+                <h4>Another service to log in.</h4>
+                @{ int iMy = 0;
+                    string[] hrefsMy = { "https://maxcdn.icons8.com/Share/icon/Logos//google_logo1600.png",
+                    "https://cdn3.iconfinder.com/data/icons/free-social-icons/67/facebook_circle_color-256.png",
+                    "https://cdn1.iconfinder.com/data/icons/iconza-circle-social/64/697029-twitter-512.png",
+                    "http://www.iconninja.com/files/238/378/475/social-vkontakte-vk-app-music-icon.svg"};
                     var loginProviders = SignInManager.GetExternalAuthenticationSchemes().ToList();
                     if (loginProviders.Count == 0)
                     {
@@ -74,11 +73,11 @@
                     else
                     {
                         <form asp-controller="Account" asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
-                            <div>
+                            <div style="padding-left:5%">
                                 <p>
                                     @foreach (var provider in loginProviders)
                                     {
-                                        <button type="submit" class="btn btn-default" name="provider" value="@provider.AuthenticationScheme" title="Log in using your @provider.DisplayName account">@provider.AuthenticationScheme</button>
+                                        <button type="submit" class="btn btn-default" name="provider" value="@provider.AuthenticationScheme" title="Log in using your @provider.DisplayName account"><img src="@hrefsMy[iMy++]" title="@provider.AuthenticationScheme" width="30" height="30" /></button>
                                     }
                                 </p>
                             </div>

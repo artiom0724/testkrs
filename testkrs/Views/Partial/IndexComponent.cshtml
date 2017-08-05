@@ -3,110 +3,291 @@
 @{
     ViewData["Title"] = Localizer["Instructions"];
 }
+@* ---------------------------------------------------------------------------------------------------------------------- *@
 
-<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
-    <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>
-        <li data-target="#myCarousel" data-slide-to="3"></li>
-        <shadow>@Localizer["MorePopular"]</shadow>
-    </ol>
-    <div class="carousel-inner" role="listbox">
-        <div class="item active">
-            <img src="~/images/banner1.svg" alt="ASP.NET" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                    {{mydatas[0]?.instructionTitle}}
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525028&clcid=0x409">
-                       {{mydatas[0]?.instructionsName}}
-                    </a>
-                </p>
-            </div>
-        </div>
-        <div class="item">
-            <img src="~/images/banner2.svg" alt="Visual Studio" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                   
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525030&clcid=0x409">
-                        Learn More
-                    </a>
-                </p>
-            </div>
-        </div>
-        <div class="item">
-            <img src="~/images/banner3.svg" alt="Package Management" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                    Bring in libraries from NuGet, Bower, and npm, and automate tasks using Grunt or Gulp.
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525029&clcid=0x409">
-                        Learn More
-                    </a>
-                </p>
-            </div>
-        </div>
-        <div class="item">
-            <img src="~/images/banner4.svg" alt="Microsoft Azure" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                    Learn how Microsoft's Azure cloud platform allows you to build, deploy, and scale web apps.
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525027&clcid=0x409">
-                        Learn More
-                    </a>
-                </p>
-            </div>
-        </div>
-    </div>
-    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-    </a>
-</div>
 <div class="modal fade" id="myModal" role="dialog" tabindex="-1" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog" role="document" style="max-width:300px">
         <div class="modal-content">
             @await Html.PartialAsync("~/Views/Account/Login.cshtml")
         </div>
     </div>
 </div>
-<div class="modal fade" id="myModalProfile" role="dialog" tabindex="-1" aria-labelledby="myModalLabelProfile">
+<div class="modal fade" id="myModalProfile" role="dialog" tabindex="-1" aria-labelledby="myModalProfile">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             @await Html.PartialAsync("~/Views/Manage/Index.cshtml")
         </div>
     </div>
 </div>
-<div class="row">
+<div class="modal fade" id="myModalRegister" role="dialog" tabindex="-1" aria-labelledby="myModalLabelRegister">
+    <div class="modal-dialog" role="form" style="max-width:300px">
+        <div class="modal-content">
+            @await Html.PartialAsync("~/Views/Account/Register.cshtml")
+        </div>
+    </div>
+</div>
+@* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ *@
+
+<div id="myCarouselPopular" class="carousel slide" data-ride="carousel" data-interval="6000">
+    <ol class="carousel-indicators">
+        <li data-target="#myCarouselPopular" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarouselPopular" data-slide-to="1"></li>
+        <li data-target="#myCarouselPopular" data-slide-to="2"></li>
+        <li data-target="#myCarouselPopular" data-slide-to="3"></li>
+    </ol>
+    <div class="carousel-inner" role="listbox">
+        <div class="item active" style="max-height:500px">
+            <div *ngFor="let mydata of mydatas; let i = index">
+                <div *ngIf="i<1">
+                    <img *ngIf="mydata.instructionImage" src={{mydata.instructionImage}} alt={{mydata.instructionsName}} class="img-responsive" style="max-width:100%;width:100%;" />
+                    <img *ngIf="!mydata.instructionImage" src="~/images/banner1.svg" alt={{mydata.instructionsName}} class="img-responsive" />
+                    <div class="carousel-caption" role="option">
+                        <p>{{mydata.instructionTitle}}</p>
+                        <div>
+                            <a class="btn btn-default" [routerLink]="['/about',mydata.instructionId]">
+                                {{mydata.instructionsName}}
+                            </a>
+                        </div>
+                        <shadow>@Localizer["MorePopular"]</shadow>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="item" style="max-height:500px">
+            <div *ngFor="let mydata of mydatas; let i = index">
+                <div *ngIf="i==1">
+                    <img *ngIf="mydata.instructionImage" src={{mydata.instructionImage}} alt={{mydata.instructionsName}} class="img-responsive" style="max-width:100%;width:100%;" />
+                    <img *ngIf="!mydata.instructionImage" src="~/images/banner2.svg" alt={{mydata.instructionsName}} class="img-responsive" />
+                    <div class="carousel-caption" role="option">
+                        <p>{{mydata.instructionTitle}}</p>
+                        <a class="btn btn-default" [routerLink]="['/about',mydata.instructionId]">
+                            {{mydata.instructionsName}}
+                        </a>
+                        <shadow>@Localizer["MorePopular"]</shadow>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="item" style="max-height:500px">
+            <div *ngFor="let mydata of mydatas; let i = index">
+                <div *ngIf="i==2">
+                    <img *ngIf="mydata.instructionImage" src={{mydata.instructionImage}} alt={{mydata.instructionsName}} class="img-responsive" style="max-width:100%;width:100%;" />
+                    <img *ngIf="!mydata.instructionImage" src="~/images/banner3.svg" alt={{mydata.instructionsName}} class="img-responsive" />
+                    <div class="carousel-caption" role="option">
+                        <p>{{mydata.instructionTitle}}</p>
+                        <a class="btn btn-default" [routerLink]="['/about',mydata.instructionId]">
+                            {{mydata.instructionsName}}
+                        </a>
+                        <shadow>@Localizer["MorePopular"]</shadow>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="item" style="max-height:500px">
+            <div *ngFor="let mydata of mydatas; let i = index">
+                <div *ngIf="i==3">
+                    <img *ngIf="mydata.instructionImage" src={{mydata.instructionImage}} alt={{mydata.instructionsName}} class="img-responsive" style="max-width:100%;width:100%;" />
+                    <img *ngIf="!mydata.instructionImage" src="~/images/banner4.svg" alt={{mydata.instructionsName}} class="img-responsive" />
+                    <div class="carousel-caption" role="option">
+                        <p>{{mydata.instructionTitle}}</p>
+                        <a class="btn btn-default" [routerLink]="['/about',mydata.instructionId]">
+                            {{mydata.instructionsName}}
+                        </a>
+                        <shadow>@Localizer["MorePopular"]</shadow>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a class="left carousel-control" href="#myCarouselPopular" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarouselPopular" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+@* ---------------------------------------------------------------------------------------------------------------------- *@
+@* ---------------------------------------------------------------------------------------------------------------------- *@
+<div id="myCarouselLastChanged" class="carousel slide" data-ride="carousel" data-interval="6000">
+    <ol class="carousel-indicators">
+        <li data-target="#myCarouselLastChanged" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarouselLastChanged" data-slide-to="1"></li>
+        <li data-target="#myCarouselLastChanged" data-slide-to="2"></li>
+        <li data-target="#myCarouselLastChanged" data-slide-to="3"></li>
+    </ol>
+    <div class="carousel-inner" role="listbox">
+        <div class="item active" style="max-height:500px">
+            <div *ngFor="let mydata of mydatas; let i = index">
+                <div *ngIf="i==4">
+                    <img *ngIf="mydata.instructionImage" src={{mydata.instructionImage}} alt={{mydata.instructionsName}} class="img-responsive" style="max-width:100%;width:100%;" />
+                    <img *ngIf="!mydata.instructionImage" src="~/images/banner1.svg" alt={{mydata.instructionsName}} class="img-responsive" />
+                    <div class="carousel-caption" role="option">
+                        <p>{{mydata.instructionTitle}}</p>
+                        <a class="btn btn-default" [routerLink]="['/about',mydata.instructionId]">
+                            {{mydata.instructionsName}}
+                        </a>
+                        <shadow>@Localizer["LastChanged"]</shadow>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="item" style="max-height:500px">
+            <div *ngFor="let mydata of mydatas; let i = index">
+                <div *ngIf="i==5">
+                    <img *ngIf="mydata.instructionImage" src={{mydata.instructionImage}} alt={{mydata.instructionsName}} class="img-responsive" style="max-width:100%;width:100%;" />
+                    <img *ngIf="!mydata.instructionImage" src="~/images/banner2.svg" alt={{mydata.instructionsName}} class="img-responsive" />
+                    <div class="carousel-caption" role="option">
+                        <p>{{mydata.instructionTitle}}</p>
+                        <a class="btn btn-default" [routerLink]="['/about',mydata.instructionId]">
+                            {{mydata.instructionsName}}
+                        </a>
+                        <shadow>@Localizer["LastChanged"]</shadow>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="item" style="max-height:500px">
+            <div *ngFor="let mydata of mydatas; let i = index">
+                <div *ngIf="i==6">
+                    <img *ngIf="mydata.instructionImage" src={{mydata.instructionImage}} alt={{mydata.instructionsName}} class="img-responsive" style="max-width:100%;width:100%;" />
+                    <img *ngIf="!mydata.instructionImage" src="~/images/banner3.svg" alt={{mydata.instructionsName}} class="img-responsive" />
+                    <div class="carousel-caption" role="option">
+                        <p>{{mydata.instructionTitle}}</p>
+                        <a class="btn btn-default" [routerLink]="['/about',mydata.instructionId]">
+                            {{mydata.instructionsName}}
+                        </a>
+                        <shadow>@Localizer["LastChanged"]</shadow>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="item" style="max-height:500px">
+            <div *ngFor="let mydata of mydatas; let i = index">
+                <div *ngIf="i==7">
+                    <img *ngIf="mydata.instructionImage" src={{mydata.instructionImage}} alt={{mydata.instructionsName}} class="img-responsive" style="max-width:100%;width:100%;" />
+                    <img *ngIf="!mydata.instructionImage" src="~/images/banner4.svg" alt={{mydata.instructionsName}} class="img-responsive" />
+                    <div class="carousel-caption" role="option">
+                        <p>{{mydata.instructionTitle}}</p>
+                        <a class="btn btn-default" [routerLink]="['/about',mydata.instructionId]">
+                            {{mydata.instructionsName}}
+                        </a>
+                        <shadow>@Localizer["LastChanged"]</shadow>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a class="left carousel-control" href="#myCarouselLastChanged" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarouselLastChanged" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+@* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// *@
+@* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// *@
+@* ---------------------------------------------------------------------------------------------------------------------- *@
+<div id="myCarouselMaxRang" class="carousel slide" data-ride="carousel" data-interval="6000">
+    <ol class="carousel-indicators">
+        <li data-target="#myCarouselMaxRang" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarouselMaxRang" data-slide-to="1"></li>
+        <li data-target="#myCarouselMaxRang" data-slide-to="2"></li>
+        <li data-target="#myCarouselMaxRang" data-slide-to="3"></li>
+    </ol>
+
+    <div class="carousel-inner" role="listbox">
+        <div class="item active" style="max-height:500px">
+            <div *ngFor="let mydata of mydatas; let i = index">
+                <div *ngIf="i==8">
+                    <img *ngIf="mydata.instructionImage" src={{mydata.instructionImage}} alt={{mydata.instructionsName}} class="img-responsive" style="max-width:100%;width:100%;" />
+                    <img *ngIf="!mydata.instructionImage" src="~/images/banner1.svg" alt={{mydata.instructionsName}} class="img-responsive" />
+                    <div class="carousel-caption" role="option">
+                        <p>{{mydata.instructionTitle}}</p>
+                        <a class="btn btn-default" [routerLink]="['/about',mydata.instructionId]">
+                            {{mydata.instructionsName}}
+                        </a>
+                        <shadow>@Localizer["MaxRayting"]</shadow>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="item" style="max-height:500px">
+            <div *ngFor="let mydata of mydatas; let i = index">
+                <div *ngIf="i==9">
+                    <img *ngIf="mydata.instructionImage" src={{mydata.instructionImage}} alt={{mydata.instructionsName}} class="img-responsive" style="max-width:100%;width:100%;" />
+                    <img *ngIf="!mydata.instructionImage" src="~/images/banner2.svg" alt={{mydata.instructionsName}} class="img-responsive" />
+                    <div class="carousel-caption" role="option">
+                        <p>{{mydata.instructionTitle}}</p>
+                        <a class="btn btn-default" [routerLink]="['/about',mydata.instructionId]">
+                            {{mydata.instructionsName}}
+                        </a>
+                        <shadow>@Localizer["MaxRayting"]</shadow>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="item" style="max-height:500px">
+            <div *ngFor="let mydata of mydatas; let i = index">
+                <div *ngIf="i==10">
+                    <img *ngIf="mydata.instructionImage" src={{mydata.instructionImage}} alt={{mydata.instructionsName}} class="img-responsive" style="max-width:100%;width:100%;" />
+                    <img *ngIf="!mydata.instructionImage" src="~/images/banner3.svg" alt={{mydata.instructionsName}} class="img-responsive" />
+                    <div class="carousel-caption" role="option">
+                        <p>{{mydata.instructionTitle}}</p>
+                        <a class="btn btn-default" [routerLink]="['/about',mydata.instructionId]">
+                            {{mydata.instructionsName}}
+                        </a>
+                        <shadow>@Localizer["MaxRayting"]</shadow>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="item" style="max-height:500px">
+            <div *ngFor="let mydata of mydatas; let i = index">
+                <div *ngIf="i==11">
+                    <img *ngIf="mydata.instructionImage" src={{mydata.instructionImage}} alt={{mydata.instructionsName}} class="img-responsive" style="max-width:100%;width:100%;" />
+                    <img *ngIf="!mydata.instructionImage" src="~/images/banner4.svg" alt={{mydata.instructionsName}} class="img-responsive" />
+                    <div class="carousel-caption" role="option">
+                        <p>{{mydata.instructionTitle}}</p>
+                        <a class="btn btn-default" [routerLink]="['/about',mydata.instructionId]">
+                            {{mydata.instructionsName}}
+                        </a>
+                        <shadow>@Localizer["MaxRayting"]</shadow>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a class="left carousel-control" href="#myCarouselMaxRang" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarouselMaxRang" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+@* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// *@
+@* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// *@
+@* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// *@
+<div class="row" style="padding-left:30%">
     <div class="col-md-3">
-        <h2>{{mydatas[0]?.instructionsName}}</h2>
+        <h2>@Localizer["Categories"]</h2>
         <ul>
-            <li>Sample pages using ASP.NET Core MVC</li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=518004">Bower</a> for managing client-side libraries</li>
-            <li>Theming using <a href="https://go.microsoft.com/fwlink/?LinkID=398939">Bootstrap</a></li>
+            <li *ngFor="let mycategory of mycategories">
+                {{mycategory.categoriesName}}
+            </li>
         </ul>
     </div>
     <div class="col-md-3">
-        <h2>{{testtext}}</h2>
-        <ul>           
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699319">Target development, staging or production environment.</a></li>
-        </ul>
-    </div>
-    <div class="col-md-3">
-        <h2>{{mydatas?.instructionsName}}</h2>
+        <h2>@Localizer["Hashtegs"]</h2>
         <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699323">Read more on the documentation site</a></li>
-        </ul>
-    </div>
-    <div class="col-md-3">
-        <h2>{{mydatas?.instructionsTitle}}</h2>
-        <ul>
-            <li *ngFor ="let mydata of mydatas">
-            <p>{{mydatas?.instructionsTitle}}</p></li>
+            <li *ngFor="let myhashteg of myhashtegs" routerLink="#">
+                #{{myhashteg.hashtegName}}
+            </li>
         </ul>
     </div>
 </div>

@@ -117,28 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Categories" xml:space="preserve">
-    <value>Categories:</value>
+  <data name="Hello" xml:space="preserve">
+    <value>Hello</value>
   </data>
-  <data name="Hashtegs" xml:space="preserve">
-    <value>Hashtegs:</value>
+  <data name="Login" xml:space="preserve">
+    <value>Log in</value>
   </data>
-  <data name="Home" xml:space="preserve">
-    <value>My Home</value>
+  <data name="Logout" xml:space="preserve">
+    <value>Log out</value>
   </data>
-  <data name="Instructions" xml:space="preserve">
-    <value>Instructions</value>
-  </data>
-  <data name="LastChanged" xml:space="preserve">
-    <value>Last changed</value>
-  </data>
-  <data name="MaxRayting" xml:space="preserve">
-    <value>Max rayting</value>
-  </data>
-  <data name="MorePopular" xml:space="preserve">
-    <value>More popular</value>
-  </data>
-  <data name="TestString" xml:space="preserve">
-    <value>My Test String</value>
+  <data name="Registration" xml:space="preserve">
+    <value>Registration</value>
   </data>
 </root>
