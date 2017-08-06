@@ -1,6 +1,6 @@
 ﻿import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-import { Mydata } from "./mydata";
+import { Http, Headers } from '@angular/http';
+import { Mydata, Mycomment } from "./mydata";
 import { Observable } from 'rxjs/Observable'
 
 
@@ -31,11 +31,14 @@ export class HttpService {
     getComments(reqestId: number) {
         return this.http.get('http://localhost:62429/Partial/GetInstructionComments?_instructionId=' + reqestId);
     }
-    getReqest() {
-        return this.http.get('http://localhost:62429/Partial/GetReqest/');
+
+    getBlocks(reqestId: number) {
+        return this.http.get('http://localhost:62429/Partial/GetBlocks?_instructionId=' + reqestId);
     }
 
-    setReqest(instr: string) {     
-      this.http.get('http://localhost:62429/Partial/SetReqest?_instructionName='+instr);
+    getCommentUsers(reqest: Mycomment) {
+        const _userPath = JSON.stringify(reqest);
+        let headers = new Headers({ 'Content-Type': 'application/json;charset=utf-8' });
+        return this.http.post('http://localhost:62429/Partial/GetUsersByComments', _userPath, { headers: headers });
     }
 }

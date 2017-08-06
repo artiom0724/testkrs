@@ -1,42 +1,70 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
 @{
-    ViewData["Title"] = "Instruction";
+    ViewData["Title"] = "Instruction";    
 }
-@*<div *ngIf="testtext">*@
-    <div class="jumbotron">
-        <div>
-            <h1>{{mydata?.instructionsName}}</h1>
-            <div class="btn btn-link" href="#" alt=@Localizer["SearchByCategory"]>
-                <h2>@Localizer["Category"] {{mydata?.instructionCategory}}</h2>
+
+
+<div *ngFor="let mystep of mysteps; let j = index" class="modal fade" [id]="j" role="dialog" tabindex="-1" aria-labelledby="j">  
+    <div class="modal-dialog" role="document" style="min-width:700px">
+        <div class="modal-content" style="width:auto">
+            <div class="modal-header">
+                <div class="modal-title" style="font-size:24px">
+                    @Localizer["Step"] {{mystep.numStep}}
+                </div>
             </div>
-            <a>{{mydata?.hashtegs}}</a>
-        </div>
-        <div>
-            <h3>{{mydata?.instructionTitle}}</h3>
+            <div class="modal-body">               
+                <div *ngFor="let myblock of myblocks; let a = index">
+                    <div *ngIf="mystep.instructionStepId == myblock.stepPath">
+                        <h4>{{myblock.textComtent}}</h4>
+                        <img *ngIf="myblock.imageContent!=null" src="{{myblock.imageContent}}" style="width:inherit;height:auto; padding-right:10px"/>                                                   
+                        <iframe  *ngIf="myblock.youtoubeUrl!=null" [src]="sanitizer.bypassSecurityTrustResourceUrl(myblock.youtoubeUrl)" frameborder="0" style="width:100%;min-height:375px">
+                        </iframe>                                                             
+                        <hr />
+                    </div> 
+                </div>
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="btn btn-default col-md-4 " *ngFor="let mystep of mysteps" href="#" style="height:230px; text-align:center;vertical-align:middle">
-            <a style="color:black;font-size:50px; text-align:center;vertical-align:middle">@Localizer["Step"] {{mystep.numStep}}</a>
+</div>
+
+<div class="jumbotron">
+    <div>
+        <h1>{{mydata?.instructionsName}}</h1>
+        <div class="btn btn-link" href="#" alt=@Localizer["SearchByCategory"]>
+            <h2>@Localizer["Category"] {{mydata?.instructionCategory}}</h2>
         </div>
-        @*<div class="btn btn-link col-md-4" href="#">
-            <img src="~/images/qqq.png" />
-        </div>*@
+        <a>{{mydata?.hashtegs}}</a>
     </div>
     <div>
-        <h2>@Localizer["Comments"]:</h2>
-        <ul class="media-list">
-            <li class="media" style="background:border-box; background-color:aquamarine" *ngFor="let mycomment of mycomments">
-                <div class="media-left">
-                    <a href="#">
-                        @* <img class="media-object" src=" "alt=""/>*@
-                    </a>
-                </div>
-                <div class="media-body">
-                    {{mycomment.commentText}}
-                </div>
-            </li>
-        </ul>
+        <h3>{{mydata?.instructionTitle}}</h3>
     </div>
-@*</div>*@
+</div>
+<div class="row">
+    <div class=" col-md-4 " *ngFor="let mystep of mysteps;let i = index" style="height:230px; text-align:center;vertical-align:middle">
+        <button class="btn btn-default" data-toggle="modal"
+                [attr.data-target]="'#'+i"
+                style="color:black;font-size:50px; text-align:center;vertical-align:middle; height:inherit;width:90%">
+            @Localizer["Step"] {{mystep.numStep}}
+        </button>     
+    </div>
+    @*<div class="btn btn-link col-md-4" href="#">
+            <img src="~/images/qqq.png" />
+        </div>*@
+</div>    
+<div>
+    <h2>@Localizer["Comments"]:</h2>
+    <ul class="media-list">
+        <li class="media" style="background:border-box; background-color:aquamarine" *ngFor="let mycomment of mycomments">
+            <div class="media-left" *ngIf="mycomment">
+                <a href="#">
+                    @* <img class="media-object" src=" "alt=""/>*@
+                </a>
+            </div>
+            <div class="media-body">
+                {{mycomment.commentText}}
+            </div>
+        </li>
+    </ul>
+</div>
+

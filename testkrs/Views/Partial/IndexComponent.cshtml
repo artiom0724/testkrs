@@ -3,31 +3,14 @@
 @{
     ViewData["Title"] = Localizer["Instructions"];
 }
-@* ---------------------------------------------------------------------------------------------------------------------- *@
-
-<div class="modal fade" id="myModal" role="dialog" tabindex="-1" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document" style="max-width:300px">
-        <div class="modal-content">
-            @await Html.PartialAsync("~/Views/Account/Login.cshtml")
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="myModalProfile" role="dialog" tabindex="-1" aria-labelledby="myModalProfile">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            @await Html.PartialAsync("~/Views/Manage/Index.cshtml")
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="myModalRegister" role="dialog" tabindex="-1" aria-labelledby="myModalLabelRegister">
-    <div class="modal-dialog" role="form" style="max-width:300px">
-        <div class="modal-content">
-            @await Html.PartialAsync("~/Views/Account/Register.cshtml")
-        </div>
-    </div>
-</div>
 @* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ *@
-
+<style>
+    p.clip {
+        white-space: nowrap; /* Запрещаем перенос строк */
+        overflow: hidden; /* Обрезаем все, что не помещается в область */   
+        text-overflow: ellipsis; /* Добавляем многоточие */
+    }
+</style>
 <div id="myCarouselPopular" class="carousel slide" data-ride="carousel" data-interval="6000">
     <ol class="carousel-indicators">
         <li data-target="#myCarouselPopular" data-slide-to="0" class="active"></li>

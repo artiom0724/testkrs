@@ -1,9 +1,11 @@
 ﻿import { Component, OnInit , Input} from '@angular/core';
 import { Response } from '@angular/http';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Location } from '@angular/common';
 import { HttpService } from './http.service';
-import { Mydata, Mystep, Myblock, Mycomment } from './mydata'
+import { Mydata, Mystep, Myblock, Mycomment, Myprofile } from './mydata'
+
 //import 'rxjs/add/operator/switchMap';
 
 @Component({
@@ -18,10 +20,12 @@ export class AboutComponent implements OnInit{
     mysteps: Mystep[] = [];
     myblocks: Myblock[] = [];
     mycomments: Mycomment[] = [];
+    myprofiles: Myprofile[] = [];
 
     constructor(public myhttpService: HttpService,
         private route: ActivatedRoute,
-        private location: Location
+        private location: Location,
+        public sanitizer: DomSanitizer
     ) { }
     ngOnInit() {      
         this.route.params
@@ -35,6 +39,12 @@ export class AboutComponent implements OnInit{
         this.myhttpService.getSteps(reqestId)
             .subscribe((data: Response) => this.mysteps = data.json());      
         this.myhttpService.getComments(reqestId)
-            .subscribe((data: Response) => this.mycomments = data.json())
-    }
+            .subscribe((data: Response) => this.mycomments = data.json());        
+        this.myhttpService.getBlocks(reqestId)
+            .subscribe((data: Response) => this.myblocks = data.json());   
+        let sendComments: Mycomment = new Mycomment();
+        sendComments = this.mycomments[0];
+        this.myhttpService.getCommentUsers(sendComments)
+            .subscribe((data: Response) => this.myprofiles = data.json());
+    }   
 }

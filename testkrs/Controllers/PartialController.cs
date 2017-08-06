@@ -164,19 +164,23 @@ namespace testkrs.Controllers
             return Json(temp);
         }
 
-        public JsonResult GetStepsComments(string _instructionName)
-        {
-            return Json(_context.Comments.ToList().FindAll(x => (x.commentName == _instructionName && x.commentType == "Step")));
-        } 
-
-        public IActionResult Register()
-        {
-            return View();
+        public JsonResult GetBlocks(int _instructionId)
+        {      
+            List<InstructionStep> tempSteps = _context.Steps.ToList().FindAll(x => x.instructionPath == _instructionId);
+            List<Block> temp = new List<Block>();
+            for (int i = 0; i< tempSteps.Count;i++)            
+                foreach(var item in _context.Blocks.ToList().FindAll(x => x.stepPath == tempSteps.ElementAt(i).instructionStepId))               
+                    temp.Add(item);
+            return Json(temp);
         }
 
-        public IActionResult Login()
+        public JsonResult GetUsersByComments(Comment _userPath)
         {
-            return View();
+            List<Profile> temp = new List<Profile>();
+           // foreach (var stringItem in _userPath)
+                temp.Add(_context.Profiles.ToList().Find(x => x.ProfileId == _userPath.userPath));
+            temp.Distinct();
+            return Json(temp);
         }
     }
 }

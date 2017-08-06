@@ -34,11 +34,13 @@ var HttpService = (function () {
     HttpService.prototype.getComments = function (reqestId) {
         return this.http.get('http://localhost:62429/Partial/GetInstructionComments?_instructionId=' + reqestId);
     };
-    HttpService.prototype.getReqest = function () {
-        return this.http.get('http://localhost:62429/Partial/GetReqest/');
+    HttpService.prototype.getBlocks = function (reqestId) {
+        return this.http.get('http://localhost:62429/Partial/GetBlocks?_instructionId=' + reqestId);
     };
-    HttpService.prototype.setReqest = function (instr) {
-        this.http.get('http://localhost:62429/Partial/SetReqest?_instructionName=' + instr);
+    HttpService.prototype.getCommentUsers = function (reqest) {
+        var _userPath = JSON.stringify(reqest);
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json;charset=utf-8' });
+        return this.http.post('http://localhost:62429/Partial/GetUsersByComments', _userPath, { headers: headers });
     };
     return HttpService;
 }());

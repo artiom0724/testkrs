@@ -8,7 +8,7 @@ namespace testkrs.Models
     public class Profile
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int ProfileId { get; set; }
+        public string ProfileId { get; set; }
         public string avaProfile { get; set; }
         public string roots { get; set; }
         public string nikProfile { get; set; }
@@ -74,10 +74,11 @@ namespace testkrs.Models
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         private int commentId { get; }
         public int CommentId { get; set; }
-        public int userPath { get; set; }
+        public string userPath { get; set; }
         public string commentType { get; set; }//instr or step
         public string commentName { get; set; }
         public string commentText { get; set; }
+        public double commentRang { get; set; }
         public DateTime commentDate { get; set; }
     }
 

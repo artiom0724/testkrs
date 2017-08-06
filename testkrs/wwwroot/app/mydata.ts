@@ -42,9 +42,11 @@ export class Myblock {
 export class Mycomment {
     commentId: number;
     CommentId: number;
+    commentRang: number;
     commentType: string;
     commentName: string;
     commentText: string;
+    userPath: string;
     commentDate: Date;
 }
 

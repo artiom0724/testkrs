@@ -12,7 +12,7 @@ namespace testkrs.Data
         public FinalDbContext(DbContextOptions<FinalDbContext> options)
             : base(options)
         { }
-
+        public DbSet<Profile> Profiles { get; set; }
         public DbSet<Hashteg> Hashtegs { get; set; }
         public DbSet<Categories> Categoriess { get; set; }
         public DbSet<Comment> Comments { get; set; }
@@ -23,6 +23,7 @@ namespace testkrs.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Profile>().ToTable("Profile");
             modelBuilder.Entity<Hashteg>().ToTable("Hashteg");
             modelBuilder.Entity<Categories>().ToTable("Categories");
             modelBuilder.Entity<Comment>().ToTable("Comment");

@@ -7,7 +7,7 @@
     ViewData["Title"] = "Log in";
 }
 <div class="modal-header">
-    <div class="modal-title">@ViewData["Title"].</div>
+    <div class="modal-title" style="font-size:24px">@ViewData["Title"]</div>
 </div>
 <div class="modal-body">
     <div class="row">
@@ -19,20 +19,20 @@
                     <div asp-validation-summary="All" class="text-danger"></div>
                     <div class="form-group">
                         <label asp-for="Email" class="col-md-2 control-label"></label>
-                        <div class="col-md-10" style="padding-left: 30px;">
+                        <div class="col-md-10" style="width:100%">
                             <input asp-for="Email" class="form-control" placeholder="Email" />
-                            <span asp-validation-for="Email" class="text-danger"></span>
+                            <span asp-validation-for="Email" class="text-danger" ></span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label asp-for="Password" class="col-md-2 control-label"></label>
-                        <div class="col-md-10" style="padding-left: 30px;">
+                        <div class="col-md-10"  style="width:100%">
                             <input asp-for="Password" class="form-control" placeholder="Password" />
                             <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
+                        <div class="col-md-offset-2 col-md-10" style="margin-left:15px">
                             <div class="checkbox">
                                 <label asp-for="RememberMe">
                                     <input asp-for="RememberMe" />
@@ -47,14 +47,13 @@
                         </div>
                     </div>
                     <p>
-                        <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">Register as a new user?</a>
+                        <a href="#"  data-toggle="modal" data-target="#myModalRegister">Register as a new user?</a>
                     </p>
-                    <p>
+                    @*<p>
                         <a asp-action="ForgotPassword">Forgot your password?</a>
-                    </p>
+                    </p>*@
                 </form>
-                <hr />
-                <h4>Another service to log in.</h4>
+                <hr />               
                 @{ int iMy = 0;
                     string[] hrefsMy = { "https://maxcdn.icons8.com/Share/icon/Logos//google_logo1600.png",
                     "https://cdn3.iconfinder.com/data/icons/free-social-icons/67/facebook_circle_color-256.png",
