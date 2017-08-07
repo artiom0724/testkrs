@@ -44,7 +44,7 @@ namespace testkrs.Models
         public string instructionCategory { get; set; }
         public int instructionPopularity { get; set; }
         public DateTime instructionTime { get; set; }
-        public int authorId { get; set; }
+        public string authorId { get; set; }
         //public List<InstructionStep> Steps { get; set; }
     }
 
@@ -76,6 +76,7 @@ namespace testkrs.Models
         public int CommentId { get; set; }
         public string userPath { get; set; }
         public string commentType { get; set; }//instr or step
+        public int commentNumStep { get; set; }
         public string commentName { get; set; }
         public string commentText { get; set; }
         public double commentRang { get; set; }

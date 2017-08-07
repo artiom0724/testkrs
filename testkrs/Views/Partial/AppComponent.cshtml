@@ -1,4 +1,6 @@
-﻿@using Microsoft.AspNetCore.Mvc.Localization
+﻿@using Microsoft.AspNetCore.Identity
+@using testkrs.Models
+@using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
 <nav class="navbar navbar-inverse navbar-fixed-top" style="width:inherit">
     <div class="container" style="width:inherit">
@@ -14,8 +16,8 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-left" style=" vertical-align:central">
                 <li class="input-group" style="max-width:inherit;">
-                    <input type="text" class="form-control" placeholder="Search for..." style="width:inherit; margin-top:10px">                  
-                    <button class="btn btn-default glyphicon glyphicon-search" type="button" style="margin-top:9px"></button>
+                    <input type="text" class="form-control" placeholder="Search for..." style="width:inherit; margin-top:10px" id="searching">                  
+                    <button ata-toggle="modal" data-target="#mySearch" class="btn btn-default glyphicon glyphicon-search" type="button" style="margin-top:9px" (click)="searchInstructions()"></button>
                 </li>
             </ul>
             @await Html.PartialAsync("_LoginPartial")
@@ -23,9 +25,33 @@
     </div>    
 </nav>
 
-<div class="modal fade" id="myModal" role="dialog" tabindex="-1" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document" style="max-width:300px">
+<div *ngIf="seachClick" class="modal fade" id="mySearch" role="dialog" tabindex="-1" aria-labelledby="mySearchLable">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
+            <div class="modal-header"> test
+            </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div *ngFor="let searchdata of searchresult" class="col-md-3" style="width:50%">
+                            <div class="card" [routerLink]="['/about',searchdata.instructionId]" onclick="document.location.reload()">
+                                <img class="card-img-top" src="{{searchdata.instructionImage}}" style="max-height:194px;max-width:260px" />
+                                <div class="card-block">
+                                    <h4 class="card-title">{{searchdata.instructionsName}}</h4>
+                                    <p class="card-text">{{searchdata.instructionTitle}}</p>
+                                    <a [routerLink]="['/about',searchdata.instructionId]" class="btn btn-primary" onclick="document.location.reload()">Show</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+           
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal" role="dialog" tabindex="-1" aria-labelledby="myModal">
+    <div class="modal-dialog" role="document" style="max-width:300px;">
+        <div class="modal-content" >
             @await Html.PartialAsync("~/Views/Account/Login.cshtml")
         </div>
     </div>

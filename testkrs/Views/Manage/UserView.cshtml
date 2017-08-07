@@ -1,0 +1,112 @@
+﻿@model IndexViewModel
+@using Microsoft.AspNetCore.Identity
+@using testkrs.Models
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    ViewData["Title"] = "Profile";
+}
+<div class="modal-header">
+    <div class="modal-title">@ViewData["Title"] @ViewData["StatusMessage"]</div>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <section>
+            <div class="col-md-8" style="width:50%;">
+                <h4>Account settings</h4>
+                <div class="col-md-10" style="padding-bottom:15px">
+                    <div class="form-group row">
+                        <label class="col-2 col-form-label">Nickname</label>
+                        <div class="col-10">
+                            <label id="nicknameNo">{{nomyprofile?.nikProfile}}</label> 
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-10" style="padding-bottom:15px">
+                    <div class="form-group row">
+                        <label class="col-2 col-form-label">E-mail</label>
+                        <div class="col-10">
+                            <label id="emailUserNo" >{{nomyprofile?.nikProfile}}</label>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="form-group row">
+                        <label class="col-2 col-form-label">Click to </label>
+                        <div class="col-10">
+                            <a href="#" id="passwordUser">Change Password?</a>
+                        </div>
+                    </div>*@
+            </div>
+        </section>
+        <section>
+            <div class="col-md-4" style="width:256px; padding-right:15px" p>
+                <div class="con">
+                    <img src="{{nomyprofile?.avaProfile}}" alt="" width="256" style="height:auto"/>
+                    <img src="https://img-fotki.yandex.ru/get/9313/163781271.72/0_a97d7_1f90e2c2_S" alt="" class="top" />
+                </div>                
+                <style>
+                    .con {
+                        position: relative
+                    }
+
+                    .top {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                    }
+                </style>
+            </div>
+        </section>
+    </div>
+    <hr />
+    <div class="row" >
+        <div class="col-md-3" style="width:50%" *ngIf="popdata!=null">
+            <h3>Most popular</h3>
+            <div class="card">
+                <img class="card-img-top" src="{{popdata?.instructionImage}}" style="max-height:194px;max-width:260px" />
+                <div class="card-block">
+                    <h4 class="card-title">{{popdata?.instructionsName}}</h4>
+                    <p class="card-text">{{popdata?.instructionTitle}}</p>
+                    <a [routerLink]="['/about',popdata.instructionId]" class="btn btn-primary" onclick="document.location.reload()">Show</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3" style="width:50%" *ngIf="mydatas[0]!=null">
+            <h3>Last changed</h3>
+            <div class="card">
+                <img class="card-img-top" src="{{mydatas[0]?.instructionImage}}" style="max-height:194px;max-width:260px" />
+                <div class="card-block">
+                    <h4 class="card-title">{{mydatas[0]?.instructionsName}}</h4>
+                    <p class="card-text">{{mydatas[0]?.instructionTitle}}</p>
+                    <div *ngFor="let mydata of mydatas; let i = index">
+                        <a *ngIf="i==0" [routerLink]="['/about',mydata.instructionId]" class="btn btn-primary" onclick="document.location.reload()">Show</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <h3>Others instructions</h3>
+    <ul class="media-list">
+        <li *ngFor="let mydata of mydatas; let i = index" class="media" style="background-color:ghostwhite">
+            <div *ngIf="i!=0">
+                <div class="media-left">                    
+                        <div class="media-object" [routerLink]="['/about',mydata.instructionId]" onclick="document.location.reload()">
+                            <div class="card" style="max-height:inherit;max-width:inherit">
+                                <img class="card-img-top" src="{{mydata.instructionImage}}" style="max-height:100px;max-width:100px" alt="" />
+                                <div class="card-block">
+                                    <p class="card-text">{{mydata.instructionsName}}</p>
+                                </div>
+                            </div>
+                        </div>                    
+                </div>
+                <div class="media-body" align="justify">
+                    <h4>{{mydata.instructionTitle}}</h4>
+                    <hr />
+                    {{mydata.instructionTime}}
+                </div>
+            </div>
+        </li>
+    </ul>
+
+</div>

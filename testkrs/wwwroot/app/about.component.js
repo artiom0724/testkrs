@@ -23,11 +23,17 @@ var AboutComponent = (function () {
         this.location = location;
         this.sanitizer = sanitizer;
         this.mydata = new mydata_1.Mydata();
+        this.author = new mydata_1.Myprofile();
         this.myhashtegs = [];
         this.mysteps = [];
         this.myblocks = [];
         this.mycomments = [];
+        this.stepcomments = [];
         this.myprofiles = [];
+        this.noMyUserClick = false;
+        this.nomyprofile = new mydata_1.Myprofile();
+        this.popdata = new mydata_1.Mydata();
+        this.mydatas = [];
     }
     AboutComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -39,16 +45,28 @@ var AboutComponent = (function () {
         var reqestId = this.mydata.InstructionId;
         this.myhttpService.getInstruction(reqestId)
             .subscribe(function (data) { return _this.mydata = data.json(); });
+        this.myhttpService.getAuthorInstruction(reqestId)
+            .subscribe(function (data) { return _this.author = data.json(); });
         this.myhttpService.getSteps(reqestId)
             .subscribe(function (data) { return _this.mysteps = data.json(); });
         this.myhttpService.getComments(reqestId)
             .subscribe(function (data) { return _this.mycomments = data.json(); });
         this.myhttpService.getBlocks(reqestId)
             .subscribe(function (data) { return _this.myblocks = data.json(); });
-        var sendComments = new mydata_1.Mycomment();
-        sendComments = this.mycomments[0];
-        this.myhttpService.getCommentUsers(sendComments)
+        this.myhttpService.getCommentUsers(reqestId)
             .subscribe(function (data) { return _this.myprofiles = data.json(); });
+        this.myhttpService.getCommentForSteps(reqestId)
+            .subscribe(function (data) { return _this.stepcomments = data.json(); });
+    };
+    AboutComponent.prototype.setNoMyprofile = function (profileid) {
+        var _this = this;
+        this.noMyUserClick = true;
+        this.myhttpService.getProfile(profileid)
+            .subscribe(function (data) { return _this.nomyprofile = data.json(); });
+        this.myhttpService.getInstructionByUser(profileid)
+            .subscribe(function (data) { return _this.mydatas = data.json(); });
+        this.myhttpService.getPopylarInstruction(profileid)
+            .subscribe(function (data) { return _this.popdata = data.json(); });
     };
     return AboutComponent;
 }());

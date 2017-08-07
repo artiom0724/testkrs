@@ -1,11 +1,15 @@
-﻿@using Microsoft.AspNetCore.Mvc.Localization
+﻿@using Microsoft.AspNetCore.Identity
+@using testkrs.Models
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 @inject IViewLocalizer Localizer
 @{
     ViewData["Title"] = Localizer["Instructions"];
 }
 @* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ *@
 <style>
-    p.clip {
+    p {
         white-space: nowrap; /* Запрещаем перенос строк */
         overflow: hidden; /* Обрезаем все, что не помещается в область */   
         text-overflow: ellipsis; /* Добавляем многоточие */
@@ -26,11 +30,9 @@
                     <img *ngIf="!mydata.instructionImage" src="~/images/banner1.svg" alt={{mydata.instructionsName}} class="img-responsive" />
                     <div class="carousel-caption" role="option">
                         <p>{{mydata.instructionTitle}}</p>
-                        <div>
-                            <a class="btn btn-default" [routerLink]="['/about',mydata.instructionId]">
-                                {{mydata.instructionsName}}
-                            </a>
-                        </div>
+                        <a class="btn btn-default" [routerLink]="['/about',mydata.instructionId]">
+                            {{mydata.instructionsName}}
+                        </a>
                         <shadow>@Localizer["MorePopular"]</shadow>
                     </div>
                 </div>
@@ -274,3 +276,4 @@
         </ul>
     </div>
 </div>
+

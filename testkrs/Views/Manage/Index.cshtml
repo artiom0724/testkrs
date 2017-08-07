@@ -7,6 +7,7 @@
 @{
     ViewData["Title"] = "Manage your Profile";
 }
+
 <div class="modal-header">
    <div class="modal-title">@ViewData["Title"] @ViewData["StatusMessage"]</div>
 </div>
@@ -19,7 +20,7 @@
                 <div class="form-group row">
                     <label class="col-2 col-form-label">Your nickname</label>
                     <div class="col-10">
-                        <input class="form-control" type="text" placeholder="Nick" id="nickname" />
+                        <input class="form-control" type="text" placeholder="Nick" id="nickname" value="{{myprofile?.nikProfile}}"/>
                     </div>
                     </div>
                 </div>
@@ -30,7 +31,7 @@
                             <input class="form-control" type="text" value=@UserManager.GetUserName(User) id="emailUser" />
                         </div>
                     </div>
-                    </div>
+                </div>                  
                     @*<div class="form-group row">
                 <label class="col-2 col-form-label">Click to </label>
                 <div class="col-10">
@@ -61,76 +62,116 @@
         </section>     
     </div>
     <hr/>
-    @*<dl class="dl-horizontal">
-        <dt>Password:</dt>
-        <dd>
-            @if (Model.HasPassword)
-            {
-                <a asp-controller="Manage" asp-action="ChangePassword" class="btn-bracketed">Change</a>
-            }
-            else
-            {
-                <a asp-controller="Manage" asp-action="SetPassword" class="btn-bracketed">Create</a>
-            }
-        </dd>
-        <dt>External Logins:</dt>
-        <dd>
-
-            @Model.Logins.Count <a asp-controller="Manage" asp-action="ManageLogins" class="btn-bracketed">Manage</a>
-        </dd>
-        <dt>Phone Number:</dt>
-        <dd>
-            <p>
-                Phone Numbers can be used as a second factor of verification in two-factor authentication.
-                See <a href="https://go.microsoft.com/fwlink/?LinkID=532713">this article</a>
-                for details on setting up this ASP.NET application to support two-factor authentication using SMS.
-            </p>*@
-    @*@(Model.PhoneNumber ?? "None")
-        @if (Model.PhoneNumber != null)
-        {
-            <br />
-            <a asp-controller="Manage" asp-action="AddPhoneNumber" class="btn-bracketed">Change</a>
-            <form asp-controller="Manage" asp-action="RemovePhoneNumber" method="post">
-                [<button type="submit" class="btn-link">Remove</button>]
-            </form>
-        }
-        else
-        {
-            <a asp-controller="Manage" asp-action="AddPhoneNumber" class="btn-bracketed">Add</a>
-        }*@
-    @*</dd>
-
-        <dt>Two-Factor Authentication:</dt>
-        <dd>
-            <p>
-                There are no two-factor authentication providers configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532713">this article</a>
-                for setting up this application to support two-factor authentication.
-            </p>*@
-    @*@if (Model.TwoFactor)
-        {
-            <form asp-controller="Manage" asp-action="DisableTwoFactorAuthentication" method="post" class="form-horizontal">
-                Enabled <button type="submit" class="btn-link btn-bracketed">Disable</button>
-            </form>
-        }
-        else
-        {
-            <form asp-controller="Manage" asp-action="EnableTwoFactorAuthentication" method="post" class="form-horizontal">
-                <button type="submit" class="btn-link btn-bracketed">Enable</button> Disabled
-            </form>
-        }*@
-    @*</dd>
-        </dl>*@
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-3" style="width:50%">
+            <h3>Most popular</h3>
+            <div class="card">
+                <img class="card-img-top" src="{{popdata?.instructionImage}}" style="max-height:194px;max-width:260px"/>
+                <div class="card-block">
+                    <h4 class="card-title">{{popdata?.instructionsName}}</h4>
+                    <p class="card-text">{{popdata?.instructionTitle}}</p>
+                    <a [routerLink]="['/about',popdata.instructionId]" class="btn btn-primary" onclick="document.location.reload()">Readact</a>
+                </div>
+            </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3" style="width:50%">
+            <h3>Last changed</h3>
+            <div class="card">
+                <img class="card-img-top" src="{{mydatas[0]?.instructionImage}}" style="max-height:194px;max-width:260px"/>
+                <div class="card-block">
+                    <h4 class="card-title">{{mydatas[0]?.instructionsName}}</h4>
+                    <p class="card-text">{{mydatas[0]?.instructionTitle}}</p>
+                    <div *ngFor="let mydata of mydatas; let i = index">
+                        <a *ngIf="i==0" [routerLink]="['/about',mydata.instructionId]" class="btn btn-primary" onclick="document.location.reload()">Redact</a>
+                    </div>
+                </div>
+            </div>
         </div>
-         More popular & last commented(changed, created) Instructions 
     </div>
-    <hr/>
-    <div class="row">
-        <div class="col-md-3">
-        </div>
-        others user Instruction
-    </div>
+    <hr />
+    <button class="btn btn-default" type="button" style="width:100%">Add instruction</button>
+    <hr />
+    <h3>Others instructions</h3>
+    <ul class="media-list">
+        <li *ngFor="let mydata of mydatas; let i = index" class="media" style="background-color:ghostwhite">
+            <div *ngIf="i!=0">
+                <div class="media-left">                   
+                        <div class="media-object" [routerLink]="['/about',mydata.instructionId]" onclick="document.location.reload()">
+                            <div class="card" style="max-height:inherit;max-width:inherit">
+                                <img class="card-img-top" src="{{mydata.instructionImage}}" style="max-height:100px;max-width:100px" alt="" />
+                                <div class="card-block">
+                                    <p class="card-text">{{mydata.instructionsName}}</p>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="media-body" align="justify">
+                    <h4>{{mydata.instructionTitle}}</h4>
+                    <hr />
+                    {{mydata.instructionTime}}
+                </div>
+            </div>
+        </li>
+    </ul>
+    
 </div>
+
+@*<dl class="dl-horizontal">
+    <dt>Password:</dt>
+    <dd>
+        @if (Model.HasPassword)
+        {
+            <a asp-controller="Manage" asp-action="ChangePassword" class="btn-bracketed">Change</a>
+        }
+        else
+        {
+            <a asp-controller="Manage" asp-action="SetPassword" class="btn-bracketed">Create</a>
+        }
+    </dd>
+    <dt>External Logins:</dt>
+    <dd>
+
+        @Model.Logins.Count <a asp-controller="Manage" asp-action="ManageLogins" class="btn-bracketed">Manage</a>
+    </dd>
+    <dt>Phone Number:</dt>
+    <dd>
+        <p>
+            Phone Numbers can be used as a second factor of verification in two-factor authentication.
+            See <a href="https://go.microsoft.com/fwlink/?LinkID=532713">this article</a>
+            for details on setting up this ASP.NET application to support two-factor authentication using SMS.
+        </p>*@
+@*@(Model.PhoneNumber ?? "None")
+    @if (Model.PhoneNumber != null)
+    {
+        <br />
+        <a asp-controller="Manage" asp-action="AddPhoneNumber" class="btn-bracketed">Change</a>
+        <form asp-controller="Manage" asp-action="RemovePhoneNumber" method="post">
+            [<button type="submit" class="btn-link">Remove</button>]
+        </form>
+    }
+    else
+    {
+        <a asp-controller="Manage" asp-action="AddPhoneNumber" class="btn-bracketed">Add</a>
+    }*@
+@*</dd>
+
+    <dt>Two-Factor Authentication:</dt>
+    <dd>
+        <p>
+            There are no two-factor authentication providers configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532713">this article</a>
+            for setting up this application to support two-factor authentication.
+        </p>*@
+@*@if (Model.TwoFactor)
+    {
+        <form asp-controller="Manage" asp-action="DisableTwoFactorAuthentication" method="post" class="form-horizontal">
+            Enabled <button type="submit" class="btn-link btn-bracketed">Disable</button>
+        </form>
+    }
+    else
+    {
+        <form asp-controller="Manage" asp-action="EnableTwoFactorAuthentication" method="post" class="form-horizontal">
+            <button type="submit" class="btn-link btn-bracketed">Enable</button> Disabled
+        </form>
+    }*@
+@*</dd>
+    </dl>*@

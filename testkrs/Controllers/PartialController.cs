@@ -37,11 +37,11 @@ namespace testkrs.Controllers
        
         public IActionResult AppComponent() => PartialView();
 
-        public IActionResult ContactComponent() => PartialView();
+        public IActionResult RedactorComponent() => PartialView();
 
         public IActionResult IndexComponent() => PartialView();
         //For IndexComponent::::::::::::::::::::::::::
-        public JsonResult GetData()//General Instructions
+        public JsonResult GetData()//Get Title Instructions
         {
             return Json(ChooseArrayInstructions(_context.Instructions.ToList()));
         }
@@ -135,10 +135,14 @@ namespace testkrs.Controllers
                 else if (j == 4) break;
             return tempInstructions;
         }
-        //::::::::::::::::::::::::::::::::::::::::::::::
-
+        //For AboutComponent:::::::::::::::::::::::::::::::
+        
         public JsonResult GetAboutInstruction(int _instructionId)
         {
+            foreach (var item in _context.Instructions)
+                if (item.InstructionId == _instructionId)
+                    item.instructionPopularity += 1;
+            _context.SaveChanges();
             return Json(_context.Instructions.ToList().Find(x => x.InstructionId == _instructionId));
         }
 
@@ -174,13 +178,67 @@ namespace testkrs.Controllers
             return Json(temp);
         }
 
-        public JsonResult GetUsersByComments(Comment _userPath)
+        public JsonResult GetUsersByComments(int _instructionId)
         {
-            List<Profile> temp = new List<Profile>();
-           // foreach (var stringItem in _userPath)
-                temp.Add(_context.Profiles.ToList().Find(x => x.ProfileId == _userPath.userPath));
-            temp.Distinct();
+            string _instructionName = _context.Instructions.ToList().Find(x => x.InstructionId == _instructionId).instructionsName;           
+            List<Comment> temp = _context.Comments.ToList()
+                .FindAll(x => x.commentName == _instructionName);
+            List<Profile> returnProfiles = new List<Profile>();
+            foreach (var stringItem in temp)
+                returnProfiles.Add(_context.Profiles.ToList().Find(x => x.ProfileId == stringItem.userPath));            
+            return Json(returnProfiles.GroupBy(x=> x.ProfileId).Select(y=>y.First()));
+        }
+
+        public JsonResult GetAuthorInstruction(int _instructionId)
+        {
+            return (Json(_context.Profiles.ToList().Find(x => x.ProfileId == _context.Instructions.ToList().Find(y => y.InstructionId == _instructionId).authorId)));
+        }
+
+        public JsonResult GetCommentsForSteps(int _instructionId)
+        {
+            string _instructionName = _context.Instructions.ToList().Find(x => x.InstructionId == _instructionId).instructionsName;         
+            List<Comment> temp = _context.Comments.ToList()
+                .FindAll(x => (x.commentName == _instructionName && x.commentType == "Step"));
+            temp.Sort((x, y) => x.commentDate.CompareTo(y.commentDate));
             return Json(temp);
+        }
+        //::::::::::::::::::::::::::::::::::::::::::::::::
+        public JsonResult GetProfile(string _ProfileId)
+        {
+            return Json(_context.Profiles.ToList().Find(x=> x.ProfileId == _ProfileId));
+        }
+
+        public JsonResult GetInstructionByUser(string _userPath)
+        {
+            List<Instruction> temp = _context.Instructions.ToList().FindAll(x => x.authorId == _userPath);
+            temp.Sort((x, y) => x.instructionTime.CompareTo(y.instructionTime));            
+            return Json(temp);
+        }
+
+        public JsonResult GetPopularityInstruction(string _userPath)
+        {
+            List<Instruction> temp = _context.Instructions.ToList().FindAll(x => x.authorId == _userPath);           
+            temp.Sort((x, y) => x.instructionRang.CompareTo(y.instructionRang));
+            if (temp.Count > 0)
+                return Json(temp.ElementAt(0));
+            else
+                return Json(null);
+        }
+        //:::::::::::::::::::::::::::::::::::::::::::::::::
+        public JsonResult GetSearchResult(string _reqest)
+        {
+            if (_reqest == null) _reqest = " ";
+            List<Instruction> temp = new List<Instruction>();
+            foreach(var item in _context.Instructions.ToList())            
+                if(getFullText(item).Contains(_reqest))                
+                    temp.Add(item);               
+            
+            return Json(temp);
+        }
+
+        public string getFullText(Instruction elem)
+        {
+            return elem.authorId + " " + elem.hashtegs + " " + elem.instructionCategory + " " + elem.instructionsName + " " + elem.instructionTitle;
         }
     }
 }

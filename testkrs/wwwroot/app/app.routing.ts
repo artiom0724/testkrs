@@ -2,15 +2,15 @@
 
 import { AboutComponent } from './about.component';
 import { IndexComponent } from './index.component';
-import { ContactComponent } from './contact.component';
+import { RedactorComponent } from './redactor.component';
 
 const appRoutes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'home', component: IndexComponent, data: { title: 'Home' } },
     { path: 'about/:InstructionId', component: AboutComponent, data: { title: 'About' } },
-    { path: 'contact', component: ContactComponent, data: { title: 'Contact' } }
+    { path: 'redactor', component: RedactorComponent, data: { title: 'Redactor' } }
 ];
 
 export const routing = RouterModule.forRoot(appRoutes);
 
-export const routedComponents = [AboutComponent, IndexComponent, ContactComponent];
+export const routedComponents = [AboutComponent, IndexComponent, RedactorComponent];

@@ -8,7 +8,7 @@
     instructionRang: number ;
     instructionCategory: string;   
     instructionPopularity: number;
-    authorId: number;
+    authorId: string;
 }
 
 export class Mycategory {
@@ -59,7 +59,7 @@ export class Mymedal {
 }
 
 export class Myprofile {
-    ProfileId: number;
+    ProfileId: string;
     avaProfile: string;
     roots: string;
     nikProfile: string;

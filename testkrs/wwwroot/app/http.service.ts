@@ -36,9 +36,32 @@ export class HttpService {
         return this.http.get('http://localhost:62429/Partial/GetBlocks?_instructionId=' + reqestId);
     }
 
-    getCommentUsers(reqest: Mycomment) {
-        const _userPath = JSON.stringify(reqest);
-        let headers = new Headers({ 'Content-Type': 'application/json;charset=utf-8' });
-        return this.http.post('http://localhost:62429/Partial/GetUsersByComments', _userPath, { headers: headers });
+    getCommentUsers(reqestId: number) {
+        return this.http.get('http://localhost:62429/Partial/GetUsersByComments?_instructionId='+reqestId);
+    }
+
+    getAuthorInstruction(reqestId: number) {
+        return this.http.get('http://localhost:62429/Partial/GetAuthorInstruction?_instructionId=' + reqestId);
+    }
+
+    getCommentForSteps(reqestId: number) {
+        return this.http.get('http://localhost:62429/Partial/GetCommentsForSteps?_instructionId=' + reqestId);
+    }
+    //*******************************************************************************************************
+    getProfile(reqestId: string) {
+        return this.http.get('http://localhost:62429/Partial/GetProfile?_ProfileId='+reqestId);
+    }
+
+    getInstructionByUser(reqestId: string) {
+        return this.http.get('http://localhost:62429/Partial/GetInstructionByUser?_userPath=' + reqestId);
+    }
+
+    getPopylarInstruction(reqestId: string) {
+        return this.http.get('http://localhost:62429/Partial/GetPopularityInstruction?_userPath=' + reqestId);
+    }
+    //*******************************************************************************************************
+
+    searchInstructions(reqest: string)    {
+        return this.http.get('http://localhost:62429/Partial/GetSearchResult?_reqest=' + reqest);
     }
 }

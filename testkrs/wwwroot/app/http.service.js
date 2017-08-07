@@ -37,10 +37,28 @@ var HttpService = (function () {
     HttpService.prototype.getBlocks = function (reqestId) {
         return this.http.get('http://localhost:62429/Partial/GetBlocks?_instructionId=' + reqestId);
     };
-    HttpService.prototype.getCommentUsers = function (reqest) {
-        var _userPath = JSON.stringify(reqest);
-        var headers = new http_1.Headers({ 'Content-Type': 'application/json;charset=utf-8' });
-        return this.http.post('http://localhost:62429/Partial/GetUsersByComments', _userPath, { headers: headers });
+    HttpService.prototype.getCommentUsers = function (reqestId) {
+        return this.http.get('http://localhost:62429/Partial/GetUsersByComments?_instructionId=' + reqestId);
+    };
+    HttpService.prototype.getAuthorInstruction = function (reqestId) {
+        return this.http.get('http://localhost:62429/Partial/GetAuthorInstruction?_instructionId=' + reqestId);
+    };
+    HttpService.prototype.getCommentForSteps = function (reqestId) {
+        return this.http.get('http://localhost:62429/Partial/GetCommentsForSteps?_instructionId=' + reqestId);
+    };
+    //*******************************************************************************************************
+    HttpService.prototype.getProfile = function (reqestId) {
+        return this.http.get('http://localhost:62429/Partial/GetProfile?_ProfileId=' + reqestId);
+    };
+    HttpService.prototype.getInstructionByUser = function (reqestId) {
+        return this.http.get('http://localhost:62429/Partial/GetInstructionByUser?_userPath=' + reqestId);
+    };
+    HttpService.prototype.getPopylarInstruction = function (reqestId) {
+        return this.http.get('http://localhost:62429/Partial/GetPopularityInstruction?_userPath=' + reqestId);
+    };
+    //*******************************************************************************************************
+    HttpService.prototype.searchInstructions = function (reqest) {
+        return this.http.get('http://localhost:62429/Partial/GetSearchResult?_reqest=' + reqest);
     };
     return HttpService;
 }());
