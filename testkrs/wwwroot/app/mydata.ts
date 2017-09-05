@@ -37,6 +37,7 @@ export class Myblock {
     imageContent: string;
     textComtent: string;
     youtoubeUrl: string;
+    numBlock: number;
 }
 
 export class Mycomment {

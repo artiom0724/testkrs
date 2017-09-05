@@ -67,6 +67,7 @@ namespace testkrs.Models
         public string imageContent { get; set; }
         public string textComtent { get; set; }
         public string youtoubeUrl { get; set; }
+        public int numBlock { get; set; }
     }
 
     public class Comment

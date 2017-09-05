@@ -22,7 +22,8 @@ var AppComponent = (function () {
         this.mydatas = [];
         this.searchresult = [];
         this.searchClick = false;
-        this.angularClientSideData = 'Angular';
+        this.searchingstr = 'asdd';
+        this.angularClientSideData = '';
     }
     AppComponent.prototype.setTitle = function (newTitle) {
         this.titleService.setTitle(newTitle);
@@ -39,8 +40,12 @@ var AppComponent = (function () {
     AppComponent.prototype.searchInstructions = function () {
         var _this = this;
         this.searchClick = true;
-        this.httpService.searchInstructions(this.reqest)
+        this.httpService.searchInstructions(this.angularClientSideData)
             .subscribe(function (data) { return _this.searchresult = data.json(); });
+    };
+    AppComponent.prototype.chooseCategory = function (str) {
+        this.angularClientSideData = str;
+        this.searchInstructions();
     };
     return AppComponent;
 }());

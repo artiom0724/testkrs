@@ -4,9 +4,15 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 @inject IViewLocalizer Localizer
-@{
-    ViewData["Title"] = "Instruction";
-}
+
+<div *ngIf="noMyUserClick" class="modal fade" id="noMyProfile" role="dialog" tabindex="-1" aria-labelledby="noMyProfileLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            @await Html.PartialAsync("~/Views/Manage/UserView.cshtml")
+        </div>
+    </div>
+</div>
+
 <div *ngFor="let mystep of mysteps; let j = index" class="modal fade" [id]="j" role="dialog" tabindex="-1" aria-labelledby="j">
     <div class="modal-dialog" role="document" style="min-width:700px">
         <div class="modal-content" style="width:auto">
@@ -15,52 +21,16 @@
                     @Localizer["Step"] {{mystep.numStep}}
                 </div>
             </div>
-            <div class="modal-body">
+            <div class="modal-body">               
                 <div *ngFor="let myblock of myblocks; let a = index">
-                    <div *ngIf="mystep.instructionStepId == myblock.stepPath">
-                        <h4 align="justify">{{myblock.textComtent}}</h4>
-                        <img *ngIf="myblock.imageContent!=null" src="{{myblock.imageContent}}" style="width:100%;height:auto;" />
-                        <iframe *ngIf="myblock.youtoubeUrl!=null" [src]="sanitizer.bypassSecurityTrustResourceUrl(myblock.youtoubeUrl)" frameborder="0" style="width:100%;min-height:375px"></iframe>
+                    <div *ngIf="mystep.instructionStepId == myblock.stepPath" style="max-width:100%">                        
+                        <input class="form-control" type="text" [(ngModel)]="myblock.textComtent" style="width:100%; margin-top:15px" placeholder="About Block"/>                      
+                        <input class="form-control" type="text" [(ngModel)]="myblock.imageContent" style="width:100%;height:auto;" placeholder="Image Url" />
+                        <input class="form-control" type="text" [(ngModel)]="myblock.youtoubeUrl" placeholder="Video Url" style="width:100%;height:auto;"/>
                         <hr />
                     </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <div style="padding-left:10%;padding-right:10%">
-                    <h2>@Localizer["Comments"]</h2>
-                    @if (SignInManager.IsSignedIn(User))
-                    {
-                        <div class="input-group" style="max-width:100%;width:100%">
-                            <input type="text" class="form-control" placeholder="Add Comment" style="max-width:92%;width:92%; margin-top:10px" id="addComment">
-                            <button class="btn btn-default glyphicon glyphicon-plus" type="button" style="margin-top:9px"></button>
-                        </div>
-                    }
-                    <ul class="media-list">
-                        <li *ngFor="let stepcomment of stepcomments" class="media" style="background-color:antiquewhite">
-                            <div *ngIf="stepcomment.commentNumStep==(j+1)">
-                                <div class="media-left">
-                                    <a href="#">
-                                        <div *ngFor="let myprofile of myprofiles">
-                                            <div class="media-object" *ngIf="myprofile.profileId==stepcomment.userPath">
-                                                <div class="card" style="max-height:inherit;max-width:inherit">
-                                                    <img class="card-img-top" src="{{myprofile.avaProfile}}" style="max-height:100px;max-width:100px" alt="" />
-                                                    <div class="card-block">
-                                                        <p class="card-text">{{myprofile.nikProfile}}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="media-body" align="justify">
-                                    <h4>{{stepcomment.commentText}}</h4>
-                                    <hr />
-                                    {{stepcomment.commentDate}}
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+                </div>      
+                <button class="btn btn-default" style="width:30%" (click)="incrNumBlock()">Add Block</button>
             </div>
         </div>
     </div>
@@ -69,67 +39,37 @@
 <div class="jumbotron">
     <div class="media">
         <div class="media-body">
-            <h1>{{mydata?.instructionsName}}</h1>
+            <h1><input [(ngModel)]="mydata.instructionName" type="text" placeholder="Instruction Name"/></h1>
             <div class="btn btn-link" href="#" alt=@Localizer["SearchByCategory"]>
-                <h2>@Localizer["Category"] {{mydata?.instructionCategory}}</h2>
+                <h2>@Localizer["Category"] <input [(ngModel)]="mydata.instructionCategory" type="text" placeholder="Category"></h2>
             </div>
-            <a>{{mydata?.hashtegs}}</a>
+            <input type="text" placeholder="#tegs" />
             <div>
-                <h3>{{mydata?.instructionTitle}}</h3>
+                <h3><input [(ngModel)]="mydata.instructionTitle" type="text" placeholder="About Instruction" style="width:100%"/></h3>
             </div>
         </div>
-        <div class="media-right">
-            <a href="#">
-                <div class="card" style="max-height:inherit;max-width:inherit">
+        <div class="media-right">          
+                <div class="card" style="max-height:inherit;max-width:inherit" data-target="#noMyProfile" (click)="setNoMyprofile(author.profileId)">
                     <img class="card-img-top" src="{{author?.avaProfile}}" style="max-height:256px;max-width:256px" alt="" />
                     <div class="card-block">
                         <p class="card-text">{{author?.nikProfile}}</p>
                     </div>
                 </div>
-            </a>
         </div>
     </div>
 </div>
+
 <div class="row">
     <div class=" col-md-4 " *ngFor="let mystep of mysteps;let i = index" style="height:230px; text-align:center;vertical-align:middle">
         <button class="btn btn-default" data-toggle="modal"
                 [attr.data-target]="'#'+i"
-                style="color:black;font-size:50px; text-align:center;vertical-align:middle; height:inherit;width:90%">
+                style="color:black;font-size:50px; text-align:center;vertical-align:middle; height:inherit;width:90%" (click)=" setStep(mystep.numStep)">
             @Localizer["Step"] {{mystep.numStep}}
         </button>
     </div>
-    @*<div class="btn btn-link col-md-4" href="#">
-            <img src="~/images/qqq.png" />
-        </div>*@
+    <button class="btn btn-default" style="width:30%;height:230px;font-size:24px" (click)="incrNumStep()">
+        Add Step
+    </button>
 </div>
-<div style="padding-left:10%;padding-right:10%">
-    <h2>@Localizer["Comments"]</h2>
-    <ul class="media-list">
-        <li *ngFor="let mycomment of mycomments" class="media" style="background-color:antiquewhite">
-            <div class="media-left">
-                <a href="#">
-                    <div *ngFor="let myprofile of myprofiles">
-                        <div class="media-object" *ngIf="myprofile.profileId==mycomment.userPath">
-                            <div class="card" style="max-height:inherit;max-width:inherit">
-                                <img class="card-img-top" src="{{myprofile.avaProfile}}" style="max-height:100px;max-width:100px" alt="" />
-                                <div class="card-block">
-                                    <p class="card-text">{{myprofile.nikProfile}}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="media-body">
-                <h4>{{mycomment.commentText}}</h4>
-                <hr />
-                {{mycomment.commentDate}}
-            </div>
-        </li>
-    </ul>
 
-    @if (SignInManager.IsSignedIn(User))
-    {
-        <button type="button" class="btn btn-default" style="width:100%">+ Add Comment +</button>
-    }
-</div>
+<button class="btn btn-info" style="width:100%">Publish</button>
